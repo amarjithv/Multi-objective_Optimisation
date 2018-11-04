@@ -2,6 +2,7 @@
 import numpy as np
 import scipy as scp
 import enum
+import matplotlib.pyplot as plt
 from pareto import non_dominated_sorting
 from problem import obj_function
 from pareto import find_rank
@@ -27,8 +28,8 @@ question_no = 1
 
 #Parameter configuration
 hmcr = 0.8
-hms = 250
-mi = 200
+hms = 100
+mi = 500
 par = 0.3
 bw = 2
 no_of_var = 1
@@ -50,8 +51,18 @@ rank = non_dominated_sorting(function_value)
 print(rank)
 import sys
 #sys.exit()
-
+plt.figure(1)
+plt.subplot(1,2,1)
+plt.plot(hm,'ro')
+#plotting
+fig = plt.figure(2)
+ax=fig.add_subplot(111)
+y=np.arange(hms)
 while(mi>0):
+    col = np.where(hm==new_soln,'b','r').flatten()
+    ax.scatter(y,hm,c=col,s=25,linewidth=0)
+    plt.draw()
+    plt.pause(0.001)
     rank = non_dominated_sorting(function_value)
     for i in range(no_of_var):
 
@@ -74,13 +85,13 @@ while(mi>0):
     mi = mi - 1
 
 print(rank)
-import matplotlib.pyplot as plt
-plt.plot(hm[:,0], hm[:, 1],'ro')
+
+#plt.plot(hm[:,0], hm[:, 1],'ro')
 plt.show()
 
 a=[]
 for i in range(hms):
     if(rank[i]==1):
         a.append(hm[i])
-plt.plot(a,'ro')
+plt.plot(hm,'bo')
 plt.show()
