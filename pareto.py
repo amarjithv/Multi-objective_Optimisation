@@ -20,7 +20,6 @@ def non_dominated_sorting(values):
                     break
             if f==1:
                 n=n+1
-                print("\n", j)
         ans.append(n)
     ans=np.array(ans)
 #    values=np.concatenate((values, ans), axis=1)

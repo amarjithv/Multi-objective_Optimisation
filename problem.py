@@ -1,29 +1,14 @@
 #!/usr/bin/env python3
 import numpy as np 
-<<<<<<< HEAD
-
-def obj_function(x, qno):
-    fx=0
-    if qno == 1:
-        for i in range(x.shape[0]):
-            fx = fx + (x[i]-1)**2
-        for i in range(x.shape[0]-1):
-            fx = fx - x[i]*x[i+1]
-    elif qno == 2:
-        for i in range(x.shape[0]):
-            fx = fx + (i+1)*(x[i]**2)
-    return fx
-
-=======
 import math
-
+from math import cos, pi, sin
 def modulus( y ):
     m=0
     for yi in y:
         m = m+yi^2
     return math.sqrt(m)
 
-def obj_function1(x, qno):
+def DTLZ1(x, qno):
     f1x = 0.5
     f2x=0.5
     gx=0
@@ -42,13 +27,54 @@ def obj_function1(x, qno):
     fx = np.array(fx)
     return fx
     
-def obj_function(x, qno):
+def schaffer(x, qno):
     f1x=x*x
     f2x=(x-2)*(x-2)
     fx = []
     fx.append(f1x)
     fx.append(f2x)
     fx = np.array(fx)
-    print(fx.shape)
+    return fx
+
+def DTLZ2(x, m):
+    gx=(x[0]-0.5)**2+(x[1]-0.5)**2
+    f1x=(1+gx)*cos(x[0]*pi*0.5)
+    f2x=(1+gx)*sin(x[0]*pi*0.5)
+    fx = []
+    fx.append(f1x)
+    fx.append(f2x)
+    fx = np.array(fx)
     return fx 
->>>>>>> bf1ad5f52f92f74a6972de86bd004d8d26f3f36e
+
+def DTLZ3(x, m):
+    gx=0
+    for xi in x[:2]:
+        gx = gx+((xi-0.5)*(xi-0.5)-math.cos(20*math.pi*(xi-0.5)))
+    f1x=(1+gx)*cos(x[0]*pi*0.5)
+    f2x=(1+gx)*sin(x[0]*pi*0.5)
+    fx = []
+    fx.append(f1x)
+    fx.append(f2x)
+    fx = np.array(fx)
+    return fx 
+
+def DTLZ4(x, m):
+    gx=(x[0]-0.5)**2+(x[1]-0.5)**2
+    f1x=(1+gx)*cos(x[0]**100*pi*0.5)
+    f2x=(1+gx)*sin(x[0]**100*pi*0.5)
+    fx = []
+    fx.append(f1x)
+    fx.append(f2x)
+    fx = np.array(fx)
+    return fx 
+   
+def DTLZ7(x, m):
+    gx=1+(9/modulus(x))*(x[0]+x[1])
+    hx=m-(f1x/(1+gx))*(1+sin(3*pi*f1x))
+    f1x=x[0]
+    f2x=(1+gx)*hx
+    fx = []
+    fx.append(f1x)
+    fx.append(f2x)
+    fx = np.array(fx)
+    return fx 
