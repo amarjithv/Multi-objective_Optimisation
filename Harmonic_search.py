@@ -5,7 +5,7 @@ import enum
 from pygmo import *
 import matplotlib.pyplot as plt
 from pareto import non_dominated_sorting
-from problem import obj_function1
+from problem import schaffer
 from pareto import find_rank
 def find_worst(ranks):
     worst = 0
@@ -28,7 +28,7 @@ question_no = 1
 #Parameter configuration
 hmcr = 0.95
 hms = 100
-mi = 5000
+mi = 500
 par = 0.10
 bw = 0.01*(upper_bound-lower_bound)
 no_of_var = 1
@@ -44,7 +44,7 @@ function_value = np.zeros((hms, M))
 #hm[5] = [0, 0]
 
 for i in range(hms):
-    function_value[i] = obj_function1(hm[i], question_no).flatten()#define the function
+    function_value[i] = schaffer(hm[i], question_no).flatten()#define the function
 
 rank = non_dominated_sorting(function_value)
 print(rank)
@@ -57,10 +57,10 @@ fig = plt.figure(2)
 ax=fig.add_subplot(111)
 y=np.arange(hms)
 while(mi>0):
-#    col = np.where(hm==new_soln,'b','r').flatten()
-#    ax.scatter(y,hm,c=col,s=25,linewidth=0)
-#    plt.draw()
-#    plt.pause(0.001)
+    col = np.where(hm==new_soln,'b','r').flatten()
+    ax.scatter(y,hm,c=col,s=25,linewidth=0)
+    plt.draw()
+    plt.pause(0.001)
     rank = non_dominated_sorting(function_value)
     for i in range(no_of_var):
 
@@ -75,7 +75,7 @@ while(mi>0):
             new_soln[i] = lower_bound + np.random.random_sample()*(upper_bound-lower_bound)#edit
 
     worst_soln_index = find_worst(rank)
-    new_sol_fval = obj_function1(new_soln, question_no).flatten()
+    new_sol_fval = schaffer(new_soln, question_no).flatten()
     new_sol_rank = find_rank(function_value, new_sol_fval)
     if new_sol_rank < rank[worst_soln_index]:
         hm[worst_soln_index] = new_soln

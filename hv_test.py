@@ -22,9 +22,17 @@ algorithm.run(10000)
 # display the results
 i=0
 p=np.zeros((100,2))
+q=np.zeros((100,2))
 for solution in algorithm.result:
     p[i]=np.array(solution.variables)
+    q[i]=np.array(solution.objectives)
     i=i+1
+
+import matplotlib.pyplot as plt
+plt.plot(p[:,0], p[:,1],'ro')
+plt.show()
+plt.plot(q[:,0], q[:,1],'ro')
+plt.show()
 print(i)
 from pygmo import *
 hv=hypervolume(p)
